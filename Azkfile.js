@@ -1,28 +1,28 @@
 systems({
 
-    'my-app': {
-        depends: ['mysql', 'redis'],
-        image: {"docker": "azukiapp/php-fpm:5.6"},
-        // provision: [
-        //   "composer install"
-        // ],
-        workdir: "/azk/#{manifest.dir}",
-        shell: "/bin/bash",
-        wait: 20,
-        mounts: {
-            '/azk/#{manifest.dir}': sync("./php")
-        },
-        scalable: {"default": 1},
-        http: {
-            domains: ["#{system.name}.#{azk.default_domain}"]
-        },
-        ports: {
-            http: "80/tcp",
-        },
-        envs: {
-            APP_DIR: "/azk/#{manifest.dir}",
-        },
-    },
+    // 'my-app': {
+    //     depends: ['mysql', 'redis'],
+    //     image: {"docker": "azukiapp/php-fpm:5.6"},
+    //     // provision: [
+    //     //   "composer install"
+    //     // ],
+    //     workdir: "/azk/#{manifest.dir}",
+    //     shell: "/bin/bash",
+    //     wait: 20,
+    //     mounts: {
+    //         '/azk/#{manifest.dir}': sync("./php")
+    //     },
+    //     scalable: {"default": 1},
+    //     http: {
+    //         domains: ["#{system.name}.#{azk.default_domain}"]
+    //     },
+    //     ports: {
+    //         http: "80/tcp",
+    //     },
+    //     envs: {
+    //         APP_DIR: "/azk/#{manifest.dir}",
+    //     },
+    // },
 
     mysql: {
         image: {"docker": "azukiapp/mysql:5.7"},
@@ -68,13 +68,13 @@ systems({
         provision: [
             'npm install',
         ],
-        workdir: '/azk/#{manifest.dir}',
+        workdir: '/azk/#{manifest.dir}/node',
         shell: '/bin/bash',
-        command: "pwd && ls -al && npm start",
-        wait: {retry: 20, timeout: 2000},
+        command: 'npm start',
+        wait: 20,
         mounts: {
-            '/azk/#{manifest.dir}': sync("."),
-            '/azk/#{manifest.dir}/node_modules': persistent("./node_modules"),
+            '/azk/#{manifest.dir}/node': sync("./node"),
+            '/azk/#{manifest.dir}/node/node_modules': persistent("./node/node_modules"),
         },
         scalable: {'default': 1},
         http: {
@@ -84,7 +84,8 @@ systems({
             http: "3000/tcp",
         },
         envs: {
-            NODE_ENV: "production",
+            NODE_ENV: "dev",
+            PORT: "3000",
         },
     },
 
