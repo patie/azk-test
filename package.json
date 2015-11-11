@@ -1,0 +1,22 @@
+{
+  "name": "azkdemo",
+  "version": "0.0.1",
+  "description": "azk getting started application",
+  "author": "Everton Ribeiro <everton@azukiapp.com>",
+  "contributors": [{
+    "name" : "Marcus Gadbem",
+    "email" : "marcus@azukiapp.com"
+  }],
+  "scripts": {
+    "start": "nodemon ./index.js"
+  },
+  "dependencies": {
+    "express": "3.4.4",
+    "express-handlebars": "^2.0.1",
+    "locale": "0.0.20"
+  },
+  "devDependencies": {
+    "nodemon": "^1.8.0"
+  },
+  "license": "BSD"
+}
